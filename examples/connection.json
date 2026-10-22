@@ -1,0 +1,7 @@
+{
+  "name": "SmittyHQ",
+  "url": "https://mcp.smittyhq.com/mcp",
+  "transport": "streamable-http",
+  "authentication": "oauth",
+  "note": "Descriptive example only. Use your MCP client's own configuration format and complete the Smitty consent flow."
+}

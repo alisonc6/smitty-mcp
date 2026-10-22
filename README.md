@@ -1,47 +1,80 @@
-# SmittyHQ
+# Smitty MCP
 
-Family calendars, tasks, reminders, and pickup coordination for your AI assistant.
+Connect an assistant to SmittyHQ, the household record for family logistics.
 
-## Registry entry
+**Hosted MCP endpoint:** https://mcp.smittyhq.com/mcp
 
-- Name: `io.github.alisonc6/smitty`
-- Title: SmittyHQ
-- Version: `1.0.0`
-- Website: https://smittyhq.com/assistants
-- Transport: `streamable-http`
-- Endpoint: https://smitty-mcp-spike-production.up.railway.app/mcp
+This repository contains public connector documentation and configuration examples.
+It does not contain the hosted server implementation or a self-hostable package.
+No local server installation is required to use the hosted connector.
 
-[`server.json`](server.json) contains the published registry metadata. Its name, title, description, version, website URL, and remote endpoint match the registry entry exactly.
+## Connect
 
-## What it does
+1. Create or sign in to your account at [SmittyHQ](https://smittyhq.com).
+2. In Muse, add `https://mcp.smittyhq.com/mcp` as a remote MCP server.
+3. Complete the Smitty sign-in and permission flow for your adult account and household.
+4. Ask your assistant to check connection capabilities before requesting an action.
 
-SmittyHQ keeps the household record for a connected assistant. Available tools read shared events and pickup responsibilities, request pickup or drop-off coordination, send supported coordination messages, and create events, subject to granted permissions and enabled features. A pending request is not confirmed coverage; the other adult must answer Smitty directly.
+Other clients need compatible remote MCP transport and OAuth support. Registration
+is subject to Smitty's approved callback configuration; this documentation does not
+promise compatibility with every MCP client. Do not use a permanent bearer token as
+a substitute for the OAuth sign-in flow.
 
-## How to connect
+For a client-neutral connection description, see
+[examples/connection.json](examples/connection.json). Its field names are descriptive;
+use your client's own configuration format.
 
-Access is currently a restricted pilot, not open self-service. A registry listing does not automatically enable access for a new household or assistant client. Contact [hello@smittyhq.com](mailto:hello@smittyhq.com) to arrange access and client configuration.
+## What a connection can do
 
-For an approved household and client:
+- Read shared events visible to the connected adult.
+- Read recorded pickup responsibility and its current status.
+- With granted permissions, service support and action approval, request pickup or
+  drop-off, record the connected adult's own coverage, send supported coordination
+  texts, and create shared events.
 
-1. Add a remote MCP server in your assistant using Streamable HTTP and the endpoint above.
-2. Complete the SmittyHQ OAuth sign-in and consent flow. The connection is for one adult in one household.
-3. Review the requested read and write permissions before connecting. Available actions depend on the permissions you grant and the features enabled for your household.
-4. Start with a shared-calendar question, such as “What shared events do we have tomorrow?”
+Available tools and permissions depend on the active service and connection.
+[Capabilities and permissions](docs/capabilities.md) explains these boundaries.
 
-Use the `/mcp` endpoint, not the website URL. Requests require OAuth authentication; an unauthenticated request returns HTTP 401. Never put account credentials or access tokens in `server.json`, an issue, or this repository.
+## Privacy and consent
 
-## Privacy and permissions
+A connection belongs to one adult in one household. Another adult's private events
+remain private. Families connect calendars and school sources in Smitty; the
+assistant reads authorized information from Smitty.
 
-SmittyHQ checks the connected adult and household on each request. The assistant can read shared plans that adult is allowed to see; another adult's private events stay private. Write actions can change records or send coordination messages when authorized. Messaging also requires the recipient's consent and the applicable product checks.
+The recipient confirms a requested pickup by replying to Smitty. A request is not
+confirmed coverage. A queued text is not proof of delivery. Existing recipient
+consent, household plan limits and service rules still apply.
 
-Information returned by a tool is shared with the assistant service you connect. Review that service's privacy practices as well as SmittyHQ's policies. Disconnecting the assistant stops future authorized access; it does not erase information already returned to that service.
+Information shared with an assistant is also subject to that assistant provider's
+policies. See Smitty's [security page](https://smittyhq.com/security),
+[privacy policy](https://smittyhq.com/privacy), and
+[terms](https://smittyhq.com/terms).
 
-- Privacy policy: https://smittyhq.com/privacy
-- Security and privacy overview: https://smittyhq.com/security
-- Connection documentation: https://smittyhq.com/assistants
-- Support: https://smittyhq.com/contact or [hello@smittyhq.com](mailto:hello@smittyhq.com)
-- Privacy questions: [privacy@smittyhq.com](mailto:privacy@smittyhq.com)
+## Troubleshooting
 
-## Keeping this listing current
+- If connection setup fails, check the server URL and retry after the service is
+  available. A published repository does not establish live service availability.
+- If an action is unavailable, ask the assistant to check connection capabilities.
+  Additional permissions require fresh consent; refreshing a token cannot add them.
+- For account or connection help, contact [hello@smittyhq.com](mailto:hello@smittyhq.com).
+  Do not post passwords, tokens, household details or private screenshots in public issues.
 
-When publishing a new registry version, update `server.json` and the registry details above together. This repository contains public connection documentation and metadata only; the SmittyHQ application source is maintained separately.
+## Registry metadata
+
+The connector identifier is `io.github.alisonc6/smitty`. [server.json](server.json)
+prepares version `1.0.1` with the current public hostname. Updating this repository
+does not publish a new version to an external registry; registry submission is a
+separate step.
+
+## Links
+
+- [SmittyHQ](https://smittyhq.com)
+- [Assistant setup](https://smittyhq.com/assistants)
+- [Family source integrations](https://smittyhq.com/integrations)
+
+## License
+
+The documentation and examples in this repository are covered by the [MIT license](LICENSE).
+That license applies only to material published here. Use of the hosted SmittyHQ
+service remains subject to its own terms. SmittyHQ names and branding are not
+licensed for use as an endorsement.

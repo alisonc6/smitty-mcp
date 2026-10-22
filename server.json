@@ -3,12 +3,12 @@
   "name": "io.github.alisonc6/smitty",
   "title": "SmittyHQ",
   "description": "Family calendars, tasks, reminders, and pickup coordination for your AI assistant.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "websiteUrl": "https://smittyhq.com/assistants",
   "remotes": [
     {
       "type": "streamable-http",
-      "url": "https://smitty-mcp-spike-production.up.railway.app/mcp"
+      "url": "https://mcp.smittyhq.com/mcp"
     }
   ]
 }
